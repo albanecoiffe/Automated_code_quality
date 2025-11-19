@@ -1,11 +1,13 @@
-name: CI
+name: CI - Lint and Tests
 
 on:
   pull_request:
-    branches: [dev]
+    branches:
+      - dev
 
 jobs:
   build:
+    name: Run Ruff and Pytest
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +25,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Ruff
-        run: ruff check .
+        run: |
+          ruff check .
 
-      - name: Run pytest
-        run: pytest
+      - name: Run Pytest
+        run: |
+          pytest --maxfail=1 --disable-warnings -q
 
